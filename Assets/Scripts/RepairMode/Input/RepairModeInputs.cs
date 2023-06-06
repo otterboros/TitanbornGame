@@ -8,14 +8,8 @@ using UnityEngine.InputSystem.Interactions;
 public class RepairModeInputs : MonoBehaviour
 {
     [HideInInspector] public Vector2 rotate;
-    [HideInInspector] public bool select;
     [HideInInspector] public bool selectTapped;
     [HideInInspector] public bool selectHeld;
-
-    private void Start()
-    {
-        
-    }
 
     public void OnRotate(InputAction.CallbackContext ctx)
     {
