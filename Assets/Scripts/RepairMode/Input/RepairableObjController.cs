@@ -21,6 +21,9 @@ public class RepairableObjController : MonoBehaviour
     float _objTargetPitch;
     float _objTargetYaw;
 
+    Coroutine waitForButtonTap;
+    bool isWaitForButtonTapRunning { get { return waitForButtonTap != null; } }
+
     private bool IsCurrentDeviceMouse
     {
         get
@@ -31,8 +34,9 @@ public class RepairableObjController : MonoBehaviour
 
     private void Start()
     {
-        _input = GetComponent<RepairModeInputs>();
-        _playerInput = GetComponent<PlayerInput>();
+        GameObject inputs = FindObjectOfType<RepairModeInputs>().gameObject;
+        _input = inputs.GetComponent<RepairModeInputs>();
+        _playerInput = inputs.GetComponent<PlayerInput>();
     }
 
     private void Update()
@@ -48,22 +52,27 @@ public class RepairableObjController : MonoBehaviour
     /// </summary>
     void ObjectSelection()
     {
-        if(_input.selectTapped)
+        if(_input.selectTapped && !isWaitForButtonTapRunning)
         {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Debug.DrawRay(ray.origin, ray.direction * 40, Color.red);
-
-            if (Physics.Raycast(ray, out hit))
+            System.Action raycastAction = () =>
             {
-                Transform objectHit = hit.transform;
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Debug.DrawRay(ray.origin, ray.direction * 40, Color.red);
 
-                if (objectHit.TryGetComponent(out ActivatorBase activatorBase))
+                if (Physics.Raycast(ray, out hit))
                 {
-                    if (!activatorBase.isActive) { activatorBase.OnActivated(); }
-                    else { activatorBase.OnDeactivated(); }
+                    Transform objectHit = hit.transform;
+
+                    if (objectHit.TryGetComponent(out ActivatorBase activatorBase))
+                    {
+                        if (!activatorBase.isActive) { activatorBase.OnActivated(); }
+                        else { activatorBase.OnDeactivated(); }
+                    }
                 }
-            }
+            };
+
+            StartThisCoroutine(raycastAction);
         }
     }
 
@@ -81,5 +90,27 @@ public class RepairableObjController : MonoBehaviour
             // Update Cinemachine camera target pitch, then yaw
             transform.Rotate(_objTargetPitch, _objTargetYaw, 0.0f, Space.World);
         }
+    }
+
+    // TODO: I've used this pattern twice now. Here and in ReplacementShader.cs. Make a generic?
+    void StartThisCoroutine(System.Action act = null)
+    {
+        waitForButtonTap = StartCoroutine(WaitForButtonTap(act));
+    }
+
+    /// <summary>
+    /// Run act once, then wait while input is still true.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator WaitForButtonTap(System.Action act)
+    {
+        if (act != null) { act(); }
+
+        while (_input.selectTapped)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        waitForButtonTap = null;
     }
 }

@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "Tap,Hold",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "ChangeVision",
+                    "type": "Button",
+                    "id": "e3a2de13-f333-4c57-abfa-4831c21a6776",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -66,6 +75,28 @@
                     "processors": "",
                     "groups": "Gamepad;Xbox Controller;PS4 Controller",
                     "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a19a625b-1dd9-4a66-94fd-9cfb1f64cb27",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "ChangeVision",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "12dd0f25-832f-4e31-b001-a8c83bbb1023",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;Xbox Controller;PS4 Controller",
+                    "action": "ChangeVision",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

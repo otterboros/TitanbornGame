@@ -20,7 +20,6 @@ public class ActivatorBase : MonoBehaviour
         foreach(WireBase wire in wiresConnected)
         {
             wire.isPowered = !wire.isPowered;
-            Debug.Log("wire " + wire.transform.name + " is powered?: " + wire.isPowered);
         }
 
         // More automated way of doing this than using a bool?
@@ -35,7 +34,6 @@ public class ActivatorBase : MonoBehaviour
         foreach (WireBase wire in wiresConnected)
         {
             wire.isPowered = !wire.isPowered;
-            Debug.Log("wire " + wire.transform.name + " is powered?: " + wire.isPowered);
         }
 
         // More automated way of doing this than using a bool?

@@ -8,6 +8,8 @@ using UnityEngine;
 public class RecieverBase : MonoBehaviour
 {
     [SerializeField] protected WireBase[] wiresConnected;
+    [HideInInspector] public bool isPowered;
+    ReplacementShader replacementShader;
 
     // Each reciever type has different activation conditions.
     protected bool arePowerOnCondsMet
@@ -22,7 +24,11 @@ public class RecieverBase : MonoBehaviour
             return true;
         }
     }
-    protected bool isPowered;
+
+    private void Start()
+    {
+        replacementShader = Camera.main.GetComponent<ReplacementShader>();
+    }
 
     protected virtual void Update()
     {
@@ -31,6 +37,10 @@ public class RecieverBase : MonoBehaviour
         {
             OnRecievingPower();
         }
+        else if (!arePowerOnCondsMet && isPowered)
+        {
+            OnLosingPower();
+        }
     }
 
     /// <summary>
@@ -38,10 +48,8 @@ public class RecieverBase : MonoBehaviour
     /// </summary>
     protected virtual void OnRecievingPower()
     {
-        Debug.Log("Reciever " + transform.name + "is active!");
-
-        // More automated way of doing this than using a bool?
         isPowered = true;
+        if (replacementShader.rendererIndex == 1) { gameObject.layer = 6; }
     }
 
     /// <summary>
@@ -49,9 +57,7 @@ public class RecieverBase : MonoBehaviour
     /// </summary>
     protected virtual void OnLosingPower() 
     {
-        Debug.Log("Reciever " + transform.name + "is inactive!");
-
-        // More automated way of doing this than using a bool?
         isPowered = false;
+        if (replacementShader.rendererIndex == 1) { gameObject.layer = 0; }
     }
 }

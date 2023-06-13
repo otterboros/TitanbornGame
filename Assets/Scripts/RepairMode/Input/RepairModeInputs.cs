@@ -10,6 +10,7 @@ public class RepairModeInputs : MonoBehaviour
     [HideInInspector] public Vector2 rotate;
     [HideInInspector] public bool selectTapped;
     [HideInInspector] public bool selectHeld;
+    [HideInInspector] public bool changeVision;
 
     public void OnRotate(InputAction.CallbackContext ctx)
     {
@@ -20,6 +21,12 @@ public class RepairModeInputs : MonoBehaviour
     {
         if (ctx.interaction is TapInteraction) { SelectTappedInput(ctx.started); }
         else { SelectHeldInput(ctx.performed); }
+    }
+
+    // Operates just like a default button press w/ performed
+    public void OnChangeVision(InputAction.CallbackContext ctx)
+    {
+        ChangeVisionInput(ctx.performed);
     }
 
     void RotateInput(Vector2 newRotationDirection)
@@ -35,5 +42,10 @@ public class RepairModeInputs : MonoBehaviour
     void SelectHeldInput(bool newSelectDirection)
     {
         selectHeld = newSelectDirection;
+    }
+
+    void ChangeVisionInput(bool newChangeVision)
+    {
+        changeVision = newChangeVision;
     }
 }
