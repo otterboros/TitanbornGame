@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
 
 /// <summary>
-/// Base class handling objects that react to signals from wiresConnected.
+/// Base class for objects that, when activated, affect wiresConnected or signals.
 /// </summary>
-public class RecieverBase : MonoBehaviour
+public class SwitchBase : MonoBehaviour, IPowerProvider
 {
     //[SerializeField] protected IPowerProvider[] inputs;
     [SerializeField] protected GameObject[] inputs;
-    ReplacementShader replacementShader;
-
     protected int poweredOnThreshold = 10;
+    public int wattsProvided { get;} = 10;
 
     /// <summary>
     /// If the power supplied by all connected power sources clears this objects's poweredOnThreshold, return true.
@@ -38,13 +36,12 @@ public class RecieverBase : MonoBehaviour
             else { return false; }
         }
     }
-    //protected bool isPowered
-    //{
-    //    get
+    //protected bool isPowered 
+    //{ get 
     //    {
     //        var wattsSuppled = 0;
 
-    //        if (inputs != null)
+    //        if(inputs != null)
     //        {
     //            foreach (IPowerProvider powerProviders in inputs)
     //            {
@@ -54,39 +51,21 @@ public class RecieverBase : MonoBehaviour
 
     //        if (wattsSuppled >= poweredOnThreshold) { return true; }
     //        else { return false; }
-    //    }
+    //    } 
     //}
 
-    private void Start()
+    /// <summary>
+    /// If switch has been activated (i.e. flipped, motion sensing active, etc.), return true.
+    /// </summary>
+    protected bool _isActivated = false;
+    public bool isActivated
     {
-        replacementShader = Camera.main.GetComponent<ReplacementShader>();
-    }
-
-    protected virtual void Update()
-    {
-        if(isPowered)
-        {
-            OnRecievingPower();
-        }
-        else
-        {
-            OnLosingPower();
-        }
+        get { return _isActivated; }
+        set { _isActivated = value; }
     }
 
     /// <summary>
-    /// What reciever does when its activated conditions are met, after being inactive.
+    /// If both isActivated and isPowered are true, return true.
     /// </summary>
-    protected virtual void OnRecievingPower()
-    {
-        if (replacementShader.rendererIndex == 1 && gameObject.layer != 6) { gameObject.layer = 6; }
-    }
-
-    /// <summary>
-    /// What reciever does when its activated conditions are no longer met, after being active.
-    /// </summary>
-    protected virtual void OnLosingPower() 
-    {
-        if (replacementShader.rendererIndex == 1 && gameObject.layer != 0) { gameObject.layer = 0; }
-    }
+    public bool isOn { get { return isPowered && isActivated; } }
 }

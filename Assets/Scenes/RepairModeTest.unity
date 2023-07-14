@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &400603020 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4991288700620247069, guid: 98f6a92c91ee2484fb96bebdb6dade01, type: 3}
-  m_PrefabInstance: {fileID: 7550714226291931164}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,42 +628,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1454765869445061571, guid: 98f6a92c91ee2484fb96bebdb6dade01, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1454765869445061571, guid: 98f6a92c91ee2484fb96bebdb6dade01, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-    - target: {fileID: 3104744544296482313, guid: 98f6a92c91ee2484fb96bebdb6dade01, type: 3}
-      propertyPath: m_ActionEvents.Array.size
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3104744544296482313, guid: 98f6a92c91ee2484fb96bebdb6dade01, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_ActionId
-      value: e3a2de13-f333-4c57-abfa-4831c21a6776
-      objectReference: {fileID: 0}
-    - target: {fileID: 3104744544296482313, guid: 98f6a92c91ee2484fb96bebdb6dade01, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_ActionName
-      value: RepairMode/ChangeVision[/Keyboard/q]
-      objectReference: {fileID: 0}
-    - target: {fileID: 3104744544296482313, guid: 98f6a92c91ee2484fb96bebdb6dade01, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3104744544296482313, guid: 98f6a92c91ee2484fb96bebdb6dade01, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3104744544296482313, guid: 98f6a92c91ee2484fb96bebdb6dade01, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 400603020}
-    - target: {fileID: 3104744544296482313, guid: 98f6a92c91ee2484fb96bebdb6dade01, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 3643051312040010707, guid: 98f6a92c91ee2484fb96bebdb6dade01, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -716,18 +675,6 @@ PrefabInstance:
     - target: {fileID: 4991288700620247069, guid: 98f6a92c91ee2484fb96bebdb6dade01, type: 3}
       propertyPath: m_Name
       value: RepairableObj
-      objectReference: {fileID: 0}
-    - target: {fileID: 7993284248974302830, guid: 98f6a92c91ee2484fb96bebdb6dade01, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7993284248974302830, guid: 98f6a92c91ee2484fb96bebdb6dade01, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 8147996211353321874, guid: 98f6a92c91ee2484fb96bebdb6dade01, type: 3}
-      propertyPath: m_Layer
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

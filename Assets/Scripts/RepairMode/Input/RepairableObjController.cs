@@ -64,10 +64,9 @@ public class RepairableObjController : MonoBehaviour
                 {
                     Transform objectHit = hit.transform;
 
-                    if (objectHit.TryGetComponent(out ActivatorBase activatorBase))
+                    if (objectHit.TryGetComponent(out SwitchBase activatorBase))
                     {
-                        if (!activatorBase.isActive) { activatorBase.OnActivated(); }
-                        else { activatorBase.OnDeactivated(); }
+                        activatorBase.isActivated = !activatorBase.isActivated;
                     }
                 }
             };

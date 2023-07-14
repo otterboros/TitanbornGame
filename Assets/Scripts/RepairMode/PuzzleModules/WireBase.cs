@@ -2,29 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO: RecieverBase shares all of this functionality. Combine or created a poweredObject base?
 /// <summary>
-/// Base class for wires. These carry "power" through their isPowered bool.
+/// Wires consist of the IREmitterBase class and an input which provides power.
 /// </summary>
-public class WireBase : MonoBehaviour
+public class WireBase : IREmitterBase
 {
-    [HideInInspector] public bool isPowered;
-    ReplacementShader replacementShader;
+    //[SerializeField] IPowerProvider input;
+    [SerializeField] GameObject input;
 
-    private void Start()
+    protected override bool isEmittingHeat
     {
-        replacementShader = Camera.main.GetComponent<ReplacementShader>();
-    }
-
-    private void Update()
-    {
-        if (replacementShader.rendererIndex == 1 && isPowered)
+        get
         {
-            gameObject.layer = 6;
-        }
-        else if (replacementShader.rendererIndex == 1 && !isPowered)
-        {
-            gameObject.layer = 0;
+            if (input.TryGetComponent(out IPowerProvider powerProvider)) { return powerProvider.isOn; }
+            else { return false; }
         }
     }
 }
