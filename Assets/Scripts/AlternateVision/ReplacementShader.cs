@@ -8,7 +8,7 @@ using UnityEngine;
 public class ReplacementShader : MonoBehaviour
 {
     private UnityEngine.Rendering.Universal.UniversalAdditionalCameraData universalAdditionalCameraData;
-    private RepairModeInputs _input;
+    private ExploreModeInputs _input;
 
     // TODO: Might be a way to get the actual renderer info better than setting an int
     /// <summary>
@@ -23,8 +23,8 @@ public class ReplacementShader : MonoBehaviour
     private void Start()
     {
         universalAdditionalCameraData = GetComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();
-        GameObject inputs = FindObjectOfType<RepairModeInputs>().gameObject;
-        _input = inputs.GetComponent<RepairModeInputs>();
+        GameObject inputs = FindObjectOfType<ExploreModeInputs>().gameObject;
+        _input = inputs.GetComponent<ExploreModeInputs>();
     }
 
     private void Update()

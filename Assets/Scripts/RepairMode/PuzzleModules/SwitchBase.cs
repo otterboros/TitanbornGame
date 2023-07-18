@@ -12,6 +12,10 @@ public class SwitchBase : MonoBehaviour, IPowerProvider
     protected int poweredOnThreshold = 10;
     public int wattsProvided { get;} = 10;
 
+    int cooldownTimer = 1;
+    Coroutine cooldownCoroutine;
+    bool isCooldownCoroutineActive { get { return cooldownCoroutine != null; } }
+
     /// <summary>
     /// If the power supplied by all connected power sources clears this objects's poweredOnThreshold, return true.
     /// </summary>
@@ -54,18 +58,41 @@ public class SwitchBase : MonoBehaviour, IPowerProvider
     //    } 
     //}
 
+    protected bool _isActivated = false;
+    // TODO: replace cooldown timer with either a switching animation (that calls cooldown during) or a check for canceling click b4 going again
     /// <summary>
     /// If switch has been activated (i.e. flipped, motion sensing active, etc.), return true.
+    /// Includes a cooldown timer -> CooldownCoroutine. Will not Set while CooldownCoroutine is active.s
     /// </summary>
-    protected bool _isActivated = false;
     public bool isActivated
     {
         get { return _isActivated; }
-        set { _isActivated = value; }
+        set 
+        {
+            if (isCooldownCoroutineActive) { return; }
+            else { _isActivated = value; StartCooldownCoroutine(); }           
+        }
     }
 
     /// <summary>
     /// If both isActivated and isPowered are true, return true.
     /// </summary>
     public bool isOn { get { return isPowered && isActivated; } }
+
+    // TODO: Genericify this. I use it a lot.
+    void StartCooldownCoroutine()
+    {
+        cooldownCoroutine = StartCoroutine(CooldownCoroutine());
+    }
+
+    /// <summary>
+    /// Wait for cooldownTimer number of seconds, then deactivate.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator CooldownCoroutine()
+    {
+        yield return new WaitForSeconds(cooldownTimer);
+
+        cooldownCoroutine = null;
+    }
 }

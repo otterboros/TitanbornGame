@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 /// <summary>
+/// DEFUNCT: used for rotating objects picked up with fixed camera
 /// Convert input data into object manipulation: rotation and selection.
 /// </summary>
 public class RepairableObjController : MonoBehaviour

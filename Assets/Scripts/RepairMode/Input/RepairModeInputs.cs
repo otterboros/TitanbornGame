@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 
 /// <summary>
+/// DEFUNCT: used for picking up objects with fixed camera
 /// Handle callbacks from InputActions InputActionsAsset > Player Input component for Repair Mode.
 /// </summary>
 public class RepairModeInputs : MonoBehaviour
