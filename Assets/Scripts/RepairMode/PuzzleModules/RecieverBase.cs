@@ -14,6 +14,8 @@ public class RecieverBase : MonoBehaviour
 
     protected int poweredOnThreshold = 10;
 
+    [SerializeField] protected bool default_on = false;
+
     /// <summary>
     /// If the power supplied by all connected power sources clears this objects's poweredOnThreshold, return true.
     /// </summary>
@@ -38,6 +40,8 @@ public class RecieverBase : MonoBehaviour
             else { return false; }
         }
     }
+
+    bool isPoweredLastFrame;
     //protected bool isPowered
     //{
     //    get
@@ -57,21 +61,24 @@ public class RecieverBase : MonoBehaviour
     //    }
     //}
 
-    private void Start()
+    protected virtual void Start()
     {
-        replacementShader = Camera.main.GetComponent<ReplacementShader>();
+        replacementShader = Camera.main.GetComponent<ReplacementShader>(); 
     }
 
     protected virtual void Update()
     {
-        if(isPowered)
+        if(isPowered && isPoweredLastFrame != isPowered)
         {
             OnRecievingPower();
         }
-        else
+        else if (!isPowered && isPoweredLastFrame != isPowered)
         {
             OnLosingPower();
         }
+
+        // Must be at end of update
+        isPoweredLastFrame = isPowered;
     }
 
     /// <summary>
