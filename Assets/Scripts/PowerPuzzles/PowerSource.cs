@@ -8,6 +8,6 @@ public class PowerSource : IREmitterBase, IPowerProvider
     /// True if PowerSource is on. On by default for now, until we get to more complex puzzles.
     /// </summary>
     public bool isOn { get; } = true;
-    protected override bool isEmittingHeat { get { return isOn; } }
+    protected override bool isPowered { get { return isOn; } }
     public int wattsProvided {get;} = 10;
 }

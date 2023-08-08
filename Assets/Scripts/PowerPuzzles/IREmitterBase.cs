@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using IREmitter;
 
 /// <summary>
 /// Base class for objects that can change color in "IR" mode.
@@ -8,28 +9,45 @@ using UnityEngine;
 public abstract class IREmitterBase : MonoBehaviour
 {
     protected ReplacementShader replacementShader;
-    protected abstract bool isEmittingHeat { get; }
+    protected abstract bool isPowered { get; }
 
-    protected virtual void Start()
+    /// <summary>
+    /// Enum label of which puzzle room this emitter is assigned to.
+    /// </summary>
+    [SerializeField] protected Room room;
+
+    protected virtual void Awake()
     {
         replacementShader = Camera.main.GetComponent<ReplacementShader>();
     }
 
+    // TODO, HACK: There's probs a way to do this without calling each frame.
     protected virtual void Update()
     {
-        // if replacementShader is in IR mode
-        if (replacementShader.rendererIndex == 1) { IREmissionManager(); }
-    }
-
-    protected void IREmissionManager()
-    {
-        if (isEmittingHeat)
+        if (isPowered && IREmitterTriggerHandler.activeRoom == room)
         {
-            gameObject.layer = 6;
+            OnReceivingPower_Emission();
         }
         else
         {
-            gameObject.layer = 0;
+            OnLosingPower_Emission();
         }
+    }
+
+    /// <summary>
+    /// What obj does when its activated conditions are met, after being inactive.
+    /// </summary>
+    protected virtual void OnReceivingPower_Emission()
+    {
+        if (IREmitterTriggerHandler.activeRoom == room) 
+        { gameObject.layer = 6; }
+    }
+
+    /// <summary>
+    /// What obj does when its activated conditions are no longer met.
+    /// </summary>
+    protected virtual void OnLosingPower_Emission()
+    {
+        gameObject.layer = 0;
     }
 }

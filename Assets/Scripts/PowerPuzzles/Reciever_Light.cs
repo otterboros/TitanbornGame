@@ -2,28 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Reciever_Light : RecieverBase
+public class Reciever_Light : ReceiverBase
 {
     Light _light;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         _light = GetComponentInChildren<Light>();
+    }
+
+    protected virtual void Start()
+    {
         if (default_on) { _light.enabled = true; }
         else { _light.enabled = false; }
     }
 
-    protected override void OnRecievingPower()
+    protected override void OnReceivingPower_Receiver()
     {
-        base.OnRecievingPower();
         _light.enabled= true;
     }
 
-    protected override void OnLosingPower()
+    protected override void OnLosingPower_Receiver()
     {
-        base.OnLosingPower();
         _light.enabled = false;
     }
 }

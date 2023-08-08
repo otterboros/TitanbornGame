@@ -7,8 +7,11 @@ using UnityEngine;
 /// </summary>
 public class SwitchBase : MonoBehaviour, IPowerProvider
 {
-    //[SerializeField] protected IPowerProvider[] inputs;
+    /// <summary>
+    /// The object(s) that provides power to this wire when it's isOn is true. Typically a PowerSource or Switch.
+    /// </summary>
     [SerializeField] protected GameObject[] inputs;
+
     protected int poweredOnThreshold = 10;
     public int wattsProvided { get;} = 10;
 
@@ -40,25 +43,9 @@ public class SwitchBase : MonoBehaviour, IPowerProvider
             else { return false; }
         }
     }
-    //protected bool isPowered 
-    //{ get 
-    //    {
-    //        var wattsSuppled = 0;
 
-    //        if(inputs != null)
-    //        {
-    //            foreach (IPowerProvider powerProviders in inputs)
-    //            {
-    //                if (powerProviders.isOn) { wattsSuppled += powerProviders.wattsProvided; }
-    //            }
-    //        }
-
-    //        if (wattsSuppled >= poweredOnThreshold) { return true; }
-    //        else { return false; }
-    //    } 
-    //}
-
-    protected bool _isActivated = false;
+    //protected bool _isActivated = false;
+    [SerializeField] protected bool _isActivated = false;
     // TODO: replace cooldown timer with either a switching animation (that calls cooldown during) or a check for canceling click b4 going again
     /// <summary>
     /// If switch has been activated (i.e. flipped, motion sensing active, etc.), return true.
@@ -75,9 +62,14 @@ public class SwitchBase : MonoBehaviour, IPowerProvider
     }
 
     /// <summary>
-    /// If both isActivated and isPowered are true, return true.
+    /// If both isActivated and isPowered are true, return true. notInput also influences this.
     /// </summary>
-    public bool isOn { get { return isPowered && isActivated; } }
+    public bool isOn 
+    { get 
+        {
+            return isPowered && isActivated;
+        } 
+    }
 
     // TODO: Genericify this. I use it a lot.
     void StartCooldownCoroutine()
