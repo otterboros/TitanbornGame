@@ -71,7 +71,10 @@ public class PlayerController : MonoBehaviour
     private GameObject _mainCamera;
 
     private const float _threshold = 0.01f;
-    private const float selectRange = 3f;
+
+    [Header("Object Selection")]
+    [Tooltip("Max distance at which an object can be selected")]
+    public const float selectRange = 3f;
 
     private bool IsCurrentDeviceMouse
     {
