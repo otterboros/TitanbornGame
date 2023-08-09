@@ -14,6 +14,8 @@ namespace DoorInteractionKit
         [SerializeField] private Transform doorTransform = null;
 
         //Door Settings
+        public enum DoorAxis {X,Y,Z } // Which axis door opens about, default is Y.
+        [SerializeField] private DoorAxis doorOpenAxis = DoorAxis.Y;
         [SerializeField] private bool doorOpenRight = true; // False to open left
         [SerializeField] private float openAngle = 90f;
         [SerializeField] private float openSpeed = 3f;
@@ -72,7 +74,18 @@ namespace DoorInteractionKit
             {
                 case InteractableType.Door:
                     closedRotation = doorTransform.rotation;
-                    openRotation = Quaternion.Euler(doorTransform.eulerAngles + new Vector3(0, doorOpenRight ? -openAngle : openAngle, 0));
+                    switch(doorOpenAxis)
+                    {
+                        case DoorAxis.X:
+                            openRotation = Quaternion.Euler(doorTransform.eulerAngles + new Vector3(doorOpenRight ? -openAngle : openAngle, 0, 0));
+                            break;
+                        case DoorAxis.Y:
+                            openRotation = Quaternion.Euler(doorTransform.eulerAngles + new Vector3(0, doorOpenRight ? -openAngle : openAngle, 0));
+                            break;
+                        case DoorAxis.Z:
+                            openRotation = Quaternion.Euler(doorTransform.eulerAngles + new Vector3(0, 0, doorOpenRight ? -openAngle : openAngle));
+                            break;
+                    }
                     break;
 
                 case InteractableType.Drawer:

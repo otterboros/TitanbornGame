@@ -10,6 +10,7 @@ namespace DoorInteractionKit
 
         SerializedProperty doorTransform;
 
+        SerializedProperty doorOpenAxis;
         SerializedProperty doorOpenRight;
         SerializedProperty openAngle;
         SerializedProperty openSpeed;
@@ -56,6 +57,7 @@ namespace DoorInteractionKit
 
             doorTransform = serializedObject.FindProperty(nameof(doorTransform));
 
+            doorOpenAxis = serializedObject.FindProperty(nameof(doorOpenAxis));
             doorOpenRight = serializedObject.FindProperty(nameof(doorOpenRight));
             openAngle = serializedObject.FindProperty(nameof(openAngle));
             openSpeed = serializedObject.FindProperty(nameof(openSpeed));
@@ -196,6 +198,7 @@ namespace DoorInteractionKit
             if (interactableType.enumValueIndex == (int)DoorInteractable.InteractableType.Door)
             {
                 EditorGUILayout.LabelField("Door Opening Settings", EditorStyles.toolbarTextField);
+                EditorGUILayout.PropertyField(doorOpenAxis);
                 EditorGUILayout.PropertyField(doorOpenRight);
                 EditorGUILayout.PropertyField(openAngle);
                 EditorGUILayout.PropertyField(openSpeed);
