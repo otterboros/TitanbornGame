@@ -43,9 +43,9 @@ GameObject:
   - component: {fileID: 6463950532945903812}
   - component: {fileID: 4727732655809799772}
   - component: {fileID: 2751502446354636901}
-  - component: {fileID: 2880586970924889810}
+  - component: {fileID: 2538015670656098352}
   m_Layer: 0
-  m_Name: Switch
+  m_Name: Switch_Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,7 +140,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &2880586970924889810
+--- !u!114 &2538015670656098352
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,9 +149,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 3318685634537136505}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce53270bbabb98d46a3db0c79ceca573, type: 3}
+  m_Script: {fileID: 11500000, guid: 920a20dd8a508e6469aefe1a28076fa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputs:
-  - {fileID: 0}
+  inputs: []
   _isActivated: 0

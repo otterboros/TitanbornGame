@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Reciever_Light : ReceiverBase
 {
-    Light _light;
+    public Light _light;
 
     protected override void Awake()
     {
@@ -21,7 +21,7 @@ public class Reciever_Light : ReceiverBase
 
     protected override void OnReceivingPower_Receiver()
     {
-        _light.enabled= true;
+        _light.enabled = true;
     }
 
     protected override void OnLosingPower_Receiver()

@@ -263,37 +263,25 @@ public class PlayerController : MonoBehaviour
 
     // modified from Unity Docs on CameraRays
     // & InfallibleCode video on selecting objects w/ raycasts
+    // TODO: Combine with interaction from doorint
     /// <summary>
-    /// Handles selection of objects by mouse position
+    /// Handles selection of objects by mouse position for Switch_Toggle
     /// </summary>
     void ObjectSelection()
     {
         if (_input.select)
         {
             RaycastHit hit;
-            //Debug.DrawRay(CinemachineCameraTarget.transform.position, CinemachineCameraTarget.transform.TransformDirection(Vector3.forward) * 100, Color.red);
 
             if (Physics.Raycast(CinemachineCameraTarget.transform.position, CinemachineCameraTarget.transform.TransformDirection(Vector3.forward), out hit, selectRange, layerMask))
             {
                 Transform objectHit = hit.transform;
 
-                if (objectHit.TryGetComponent(out SwitchBase activatorBase))
+                if (objectHit.TryGetComponent(out Switch_Toggle activatorBase))
                 {
                     activatorBase.isActivated = !activatorBase.isActivated;
                 }
             }
         }
     }
-
-    //private void OnDrawGizmosSelected()
-    //{
-    //    Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
-    //    Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
-
-    //    if (Grounded) Gizmos.color = transparentGreen;
-    //    else Gizmos.color = transparentRed;
-
-    //    // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
-    //    Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
-    //}
 }

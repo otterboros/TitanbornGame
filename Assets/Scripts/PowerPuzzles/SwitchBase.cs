@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Base class for objects that, when activated, affect wiresConnected or signals.
 /// </summary>
-public class SwitchBase : MonoBehaviour, IPowerProvider
+public abstract class SwitchBase : MonoBehaviour, IPowerProvider
 {
     /// <summary>
     /// The object(s) that provides power to this wire when it's isOn is true. Typically a PowerSource or Switch.
@@ -15,9 +15,9 @@ public class SwitchBase : MonoBehaviour, IPowerProvider
     protected int poweredOnThreshold = 10;
     public int wattsProvided { get;} = 10;
 
-    int cooldownTimer = 1;
-    Coroutine cooldownCoroutine;
-    bool isCooldownCoroutineActive { get { return cooldownCoroutine != null; } }
+    protected int cooldownTimer = 1;
+    protected Coroutine cooldownCoroutine;
+    protected bool isCooldownCoroutineActive { get { return cooldownCoroutine != null; } }
 
     /// <summary>
     /// If the power supplied by all connected power sources clears this objects's poweredOnThreshold, return true.
@@ -44,22 +44,12 @@ public class SwitchBase : MonoBehaviour, IPowerProvider
         }
     }
 
-    //protected bool _isActivated = false;
-    [SerializeField] protected bool _isActivated = false;
+    protected bool _isActivated = false;
     // TODO: replace cooldown timer with either a switching animation (that calls cooldown during) or a check for canceling click b4 going again
     /// <summary>
     /// If switch has been activated (i.e. flipped, motion sensing active, etc.), return true.
-    /// Includes a cooldown timer -> CooldownCoroutine. Will not Set while CooldownCoroutine is active.s
     /// </summary>
-    public bool isActivated
-    {
-        get { return _isActivated; }
-        set 
-        {
-            if (isCooldownCoroutineActive) { return; }
-            else { _isActivated = value; StartCooldownCoroutine(); }           
-        }
-    }
+    public abstract bool isActivated { get; set; }
 
     /// <summary>
     /// If both isActivated and isPowered are true, return true. notInput also influences this.
@@ -72,7 +62,7 @@ public class SwitchBase : MonoBehaviour, IPowerProvider
     }
 
     // TODO: Genericify this. I use it a lot.
-    void StartCooldownCoroutine()
+    protected void StartCooldownCoroutine()
     {
         cooldownCoroutine = StartCoroutine(CooldownCoroutine());
     }
@@ -81,7 +71,7 @@ public class SwitchBase : MonoBehaviour, IPowerProvider
     /// Wait for cooldownTimer number of seconds, then deactivate.
     /// </summary>
     /// <returns></returns>
-    IEnumerator CooldownCoroutine()
+    protected IEnumerator CooldownCoroutine()
     {
         yield return new WaitForSeconds(cooldownTimer);
 
