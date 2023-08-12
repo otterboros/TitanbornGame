@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Reciever_Light : ReceiverBase
 {
-    public Light _light;
+    [HideInInspector] public Light _light;
 
     protected override void Awake()
     {
@@ -15,7 +15,7 @@ public class Reciever_Light : ReceiverBase
 
     protected virtual void Start()
     {
-        if (default_on) { _light.enabled = true; }
+        if (invert_OnOffStates) { _light.enabled = true; }
         else { _light.enabled = false; }
     }
 

@@ -55,12 +55,28 @@ namespace DoorInteractionKit
         private Vector3 closedPosition;
         private Vector3 openPosition;
         private bool isUnlocking = false;
-        private bool isOpening = false;
+        private bool _isOpening = false;
+        /// <summary>
+        /// public getter for private _isOpening, set true when door is opening but not yet at its open angle.
+        /// </summary>
+        public bool IsOpening
+        {
+            get { return _isOpening; }
+        }
+
         private bool isClosing = false;
         private Quaternion closedRotation;
         private Quaternion openRotation;
 
-        private bool doorOpen = false;
+        private bool _doorOpen = false;
+
+        /// <summary>
+        /// public getter for private _doorOpen, set true when door is fully open.
+        /// </summary>
+        public bool DoorOpen
+        {
+            get { return _doorOpen; }
+        }
 
         private void Start()
         {
@@ -119,13 +135,13 @@ namespace DoorInteractionKit
             switch (interactableType)
             {
                 case InteractableType.Door:
-                    if (isOpening)
+                    if (_isOpening)
                     {
                         doorTransform.rotation = Quaternion.Slerp(doorTransform.rotation, openRotation, Time.deltaTime * openSpeed);
                         if (Quaternion.Angle(doorTransform.rotation, openRotation) < 0.1f)
                         {
                             doorTransform.rotation = openRotation;
-                            isOpening = false;
+                            _isOpening = false;
                         }
                     }
                     else if (isClosing)
@@ -140,13 +156,13 @@ namespace DoorInteractionKit
                     break;
 
                 case InteractableType.Drawer:
-                    if (isOpening && interactableType == InteractableType.Drawer)
+                    if (_isOpening && interactableType == InteractableType.Drawer)
                     {
                         doorTransform.position = Vector3.MoveTowards(doorTransform.position, openPosition, Time.deltaTime * drawerOpenSpeed);
                         if (Vector3.Distance(doorTransform.position, openPosition) < 0.01f)
                         {
                             doorTransform.position = openPosition;
-                            isOpening = false;
+                            _isOpening = false;
                         }
                     }
                     else if (isClosing && interactableType == InteractableType.Drawer)
@@ -199,17 +215,17 @@ namespace DoorInteractionKit
             }
 
             // Ignore interaction if door is currently moving
-            if (isOpening || isClosing || isUnlocking)
+            if (_isOpening || isClosing || isUnlocking)
                 return;
 
-            if (doorOpen)
+            if (_doorOpen)
             {
                 isClosing = true;
                 DoorAudioManager.instance.Play(doorCloseSound, closeDelay);
             }
             else
             {
-                isOpening = true;
+                _isOpening = true;
                 DoorAudioManager.instance.Play(doorOpenSound, openDelay);
 
                 if (!hasSpawnedItems)
@@ -219,7 +235,7 @@ namespace DoorInteractionKit
                 }
             }
 
-            doorOpen = !doorOpen;
+            _doorOpen = !_doorOpen;
         }
 
         public void RemovePlank()

@@ -14,7 +14,7 @@ public class Reciever_Door : ReceiverBase
 
     protected virtual void Start()
     {
-        if (default_on) { _animator.Play("Door.DoorOpen"); }
+        if (invert_OnOffStates) { _animator.Play("Door.DoorOpen"); }
         else { _animator.Play("Door.Idle"); }
     }
 
@@ -22,11 +22,13 @@ public class Reciever_Door : ReceiverBase
     {
         if (isPowered && isPoweredLastFrame != isPowered)
         {
-            OnReceivingPower_Receiver();
+            if (invert_OnOffStates) { OnLosingPower_Receiver(); }
+            else { OnReceivingPower_Receiver(); }
         }
         else if (!isPowered && isPoweredLastFrame != isPowered)
         {
-            OnLosingPower_Receiver();
+            if (invert_OnOffStates) { OnReceivingPower_Receiver(); }
+            else {  OnLosingPower_Receiver(); }
         }
 
         // Must be at end of update

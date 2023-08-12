@@ -15,7 +15,7 @@ public abstract class ReceiverBase : IREmitterBase
     /// <summary>
     /// Is this receiver in it's "on" state by default
     /// </summary>
-    [SerializeField] protected bool default_on = false;
+    [SerializeField] protected bool invert_OnOffStates = false;
 
     /// <summary>
     /// If the power supplied by all connected power sources clears this objects's poweredOnThreshold, return true.
