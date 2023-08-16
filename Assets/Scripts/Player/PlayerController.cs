@@ -264,6 +264,7 @@ public class PlayerController : MonoBehaviour
     // modified from Unity Docs on CameraRays
     // & InfallibleCode video on selecting objects w/ raycasts
     // TODO: Combine with interaction from doorint
+    // TODO: reduce to just one tryget check with interface
     /// <summary>
     /// Handles selection of objects by mouse position for Switch_Toggle
     /// </summary>
@@ -277,9 +278,13 @@ public class PlayerController : MonoBehaviour
             {
                 Transform objectHit = hit.transform;
 
-                if (objectHit.TryGetComponent(out Switch_Toggle activatorBase))
+                if (objectHit.TryGetComponent(out Switch_Toggle switch_toggle))
                 {
-                    activatorBase.isActivated = !activatorBase.isActivated;
+                    switch_toggle.isActivated = !switch_toggle.isActivated;
+                }
+                else if(objectHit.TryGetComponent(out Switch_Timer switch_timer))
+                {
+                    switch_timer.isActivated = !switch_timer.isActivated;
                 }
             }
         }
